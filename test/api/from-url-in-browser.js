@@ -8,13 +8,7 @@ const { JSDOM } = require("../..");
 
 require("chai").use(require("../chai-helpers.js"));
 
-let inBrowser = false;
-
-describe("API: JSDOM.fromURL()", () => {
-  describe("in browser", { skipUnlessBrowser: true }, () => {
-    inBrowser = true;
-  });
-
+describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
   it("should return a rejected promise for a bad URL", () => {
     return Promise.all([
       assert.isRejected(JSDOM.fromURL("asdf"), TypeError),
@@ -24,13 +18,13 @@ describe("API: JSDOM.fromURL()", () => {
   });
 
   it("should return a rejected promise for a 404", () => {
-    const url = "404.html";
+    const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "404.html";
 
     return assert.isRejected(JSDOM.fromURL(url));
   });
 
   it("should use the body of 200 responses", async () => {
-    const url = "Hello.html";
+    const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
 
     const dom = await JSDOM.fromURL(url);
     assert.strictEqual(dom.serialize(), "<html><head></head><body><p>Hello</p></body></html>");
@@ -42,21 +36,21 @@ describe("API: JSDOM.fromURL()", () => {
     });
 
     it("should not send a Referer header when no referrer option is given", async () => {
-      const url = "Hello.html";
+      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
 
       const dom = await JSDOM.fromURL(url);
       assert.strictEqual(dom.window.document.referrer, "");
     });
 
     it("should use the supplied referrer option as a Referer header", async () => {
-      const url = "Hello.html";
+      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
 
       const dom = await JSDOM.fromURL(url, { referrer: "http://example.com/" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
     });
 
     it("should canonicalize referrer URLs before using them as a Referer header", async () => {
-      const url = "Hello.html";
+      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
 
       const dom = await JSDOM.fromURL(url, { referrer: "http:example.com" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
@@ -66,18 +60,14 @@ describe("API: JSDOM.fromURL()", () => {
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
-        const url = inBrowser ?
-          location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html" :
-          await simpleServer(200, { "Content-Type": "text/html" });
+        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.URL, url);
       });
 
       it("should preserve full request URL", async () => {
-        const url = inBrowser ?
-          location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html" :
-          await simpleServer(200, { "Content-Type": "text/html" });
+        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.html";
         const path = "t";
         const search = "?a=1";
         const fragment = "#fragment";
@@ -98,7 +88,7 @@ describe("API: JSDOM.fromURL()", () => {
 
     describe("contentType", () => {
       it("should use the content type fetched for a 200", async () => {
-        const url = "doc.xml";
+        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "doc.xml";
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.contentType, "application/xml");
@@ -110,13 +100,3 @@ describe("API: JSDOM.fromURL()", () => {
     });
   });
 });
-
-async function simpleServer(responseCode, headers, body) {
-  const server = await createServer((req, res) => {
-    res.writeHead(responseCode, headers);
-    res.end(body);
-    server.destroy();
-  });
-
-  return `http://127.0.0.1:${server.address().port}/`;
-}
