@@ -1,4 +1,3 @@
-/* globals location:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -22,7 +21,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
     });
 
     it("should not send a Referer header when no referrer option is given", async () => {
-      const url = "https://github.com/";
+      const url = "https://unpkg.com/paper@0.12.15/dist/paper-full.js";
 
       const dom = await JSDOM.fromURL(url);
       console.log(dom.window.document.referrer);
@@ -30,14 +29,14 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
     });
 
     it("should use the supplied referrer option as a Referer header", async () => {
-      const url = "https://github.com/";
+      const url = "https://unpkg.com/paper@0.12.15/dist/paper-full.js";
 
       const dom = await JSDOM.fromURL(url, { referrer: "http://example.com/" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
     });
 
     it("should canonicalize referrer URLs before using them as a Referer header", async () => {
-      const url = "https://github.com/";
+      const url = "https://unpkg.com/paper@0.12.15/dist/paper-full.js";
 
       const dom = await JSDOM.fromURL(url, { referrer: "http:example.com" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
@@ -47,14 +46,14 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
-        const url = "https://github.com/";
+        const url = "https://unpkg.com/paper@0.12.15/dist/paper-full.js";
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.URL, url);
       });
 
       it("should preserve full request URL", async () => {
-        const url = "https://github.com/";
+        const url = "https://unpkg.com/paper@0.12.15/dist/paper-full.js";
         const search = "?a=1";
         const fragment = "#fragment";
         const fullURL = url + search + fragment;
