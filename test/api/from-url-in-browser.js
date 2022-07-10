@@ -1,4 +1,5 @@
 /* globals location:false */
+/* globals console:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -17,6 +18,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
   });
 
   it("should return a rejected promise for a 404", () => {
+    console.log(location.toString());
     const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "404.html";
 
     return assert.isRejected(JSDOM.fromURL(url));
