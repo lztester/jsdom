@@ -2,7 +2,6 @@
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
-const { createServer } = require("../util.js");
 
 const { JSDOM } = require("../..");
 
