@@ -1,9 +1,9 @@
+/*globals location:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
 const { createServer } = require("../util.js");
 
-const jsdom = require("../..");
 const { JSDOM } = require("../..");
 
 require("chai").use(require("../chai-helpers.js"));
@@ -23,7 +23,7 @@ describe("API: JSDOM.fromURL()", () => {
     ]);
   });
 
-  it("should return a rejected promise for a 404", async () => {
+  it("should return a rejected promise for a 404", () => {
     const url = "404.html";
 
     return assert.isRejected(JSDOM.fromURL(url));
@@ -119,35 +119,4 @@ async function simpleServer(responseCode, headers, body) {
   });
 
   return `http://127.0.0.1:${server.address().port}/`;
-}
-
-async function requestRecordingServer(recorder) {
-  const server = await createServer((req, res) => {
-    recorder(req);
-
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end("<p>Hello</p>");
-    server.destroy();
-  });
-
-  return `http://127.0.0.1:${server.address().port}/`;
-}
-
-async function redirectServer(body, extraInitialResponseHeaders, ultimateResponseHeaders) {
-  const server = await createServer((req, res) => {
-    if (req.url.endsWith("/1")) {
-      res.writeHead(301, { Location: "/2", ...extraInitialResponseHeaders });
-      res.end();
-    } else if (req.url.endsWith("/2")) {
-      res.writeHead(200, ultimateResponseHeaders);
-      res.end(body);
-      server.destroy();
-    } else {
-      throw new Error("Unexpected route hit in redirect test server");
-    }
-  });
-
-  const base = `http://127.0.0.1:${server.address().port}/`;
-
-  return [base + "1", base + "2"];
 }
