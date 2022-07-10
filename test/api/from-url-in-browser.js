@@ -1,5 +1,3 @@
-/* globals location:false */
-/* globals console:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -17,70 +15,15 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
     ]);
   });
 
-  it("should return a rejected promise for a 404", () => {
-    console.log(location.toString());
-    const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "404.html";
-
-    return assert.isRejected(JSDOM.fromURL(url));
-  });
-
-  it("should use the body of 200 responses", async () => {
-    const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-
-    const dom = await JSDOM.fromURL(url);
-    assert.strictEqual(dom.serialize(), "<html><head></head><body><p>Hello</p></body></html>");
-  });
-
   describe("referrer", () => {
     it("should reject when passing an invalid absolute URL for referrer", () => {
       assert.isRejected(JSDOM.fromURL("http://example.com/", { referrer: "asdf" }), TypeError);
     });
 
-    it("should not send a Referer header when no referrer option is given", async () => {
-      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-
-      const dom = await JSDOM.fromURL(url);
-      assert.strictEqual(dom.window.document.referrer, "");
-    });
-
-    it("should use the supplied referrer option as a Referer header", async () => {
-      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-
-      const dom = await JSDOM.fromURL(url, { referrer: "http://example.com/" });
-      assert.strictEqual(dom.window.document.referrer, "http://example.com/");
-    });
-
-    it("should canonicalize referrer URLs before using them as a Referer header", async () => {
-      const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-
-      const dom = await JSDOM.fromURL(url, { referrer: "http:example.com" });
-      assert.strictEqual(dom.window.document.referrer, "http://example.com/");
-    });
   });
 
   describe("inferring options from the response", () => {
     describe("url", () => {
-      it("should use the URL fetched for a 200", async () => {
-        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-
-        const dom = await JSDOM.fromURL(url);
-        assert.strictEqual(dom.window.document.URL, url);
-      });
-
-      it("should preserve full request URL", async () => {
-        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "Hello.htm";
-        const path = "t";
-        const search = "?a=1";
-        const fragment = "#fragment";
-        const fullURL = url + path + search + fragment;
-
-        const dom = await JSDOM.fromURL(fullURL);
-        assert.strictEqual(dom.window.document.URL, fullURL);
-        assert.strictEqual(dom.window.location.href, fullURL);
-        assert.strictEqual(dom.window.location.pathname, "/" + path);
-        assert.strictEqual(dom.window.location.search, search);
-        assert.strictEqual(dom.window.location.hash, fragment);
-      });
 
       it("should disallow passing a URL manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { url: "https://example.org" }), TypeError);
@@ -88,13 +31,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
     });
 
     describe("contentType", () => {
-      it("should use the content type fetched for a 200", async () => {
-        const url = location.origin + location.pathname.replace(/(.*\/).*/, "$1") + "doc.xml";
-
-        const dom = await JSDOM.fromURL(url);
-        assert.strictEqual(dom.window.document.contentType, "application/xml");
-      });
-
       it("should disallow passing a content type manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
