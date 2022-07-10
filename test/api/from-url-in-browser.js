@@ -25,6 +25,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
       const url = location.toString();
 
       const dom = await JSDOM.fromURL(url);
+      console.log(dom.window.document.referrer);
       assert.strictEqual(dom.window.document.referrer, "");
     });
 
