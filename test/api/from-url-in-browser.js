@@ -19,12 +19,10 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
     it("should reject when passing an invalid absolute URL for referrer", () => {
       assert.isRejected(JSDOM.fromURL("http://example.com/", { referrer: "asdf" }), TypeError);
     });
-
   });
 
   describe("inferring options from the response", () => {
     describe("url", () => {
-
       it("should disallow passing a URL manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { url: "https://example.org" }), TypeError);
       });
