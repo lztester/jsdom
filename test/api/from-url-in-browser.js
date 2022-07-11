@@ -55,4 +55,18 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
       });
     });
   });
+
+  describe("load the script resouces"), () => {
+    it("should load external scripts successfully", async () => {
+      const url = location.origin + "/";
+
+      const dom = await JSDOM.fromURL(url, {
+        runScripts: "dangerously",
+        resources: "usable",
+        resources: new jsdom.ResourceLoader({userAgent: navigator.userAgent}),
+        pretendToBeVisual: true
+      });
+      assert.strictEqual(!!dom.window.document, true);
+    });
+  });
 });
