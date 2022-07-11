@@ -1,5 +1,4 @@
 /* globals location:false */
-/* globals navigator:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -55,19 +54,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
       it("should disallow passing a content type manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
-    });
-  });
-
-  describe("load the script resouces", () => {
-    it("should load external scripts successfully", async () => {
-      const url = location.origin + "/";
-
-      const dom = await JSDOM.fromURL(url, {
-        runScripts: "dangerously",
-        resources: new jsdom.ResourceLoader({ userAgent: navigator.userAgent }),
-        pretendToBeVisual: true
-      });
-      assert.strictEqual(Boolean(dom.window.document), true);
     });
   });
 });
