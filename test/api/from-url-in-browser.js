@@ -1,4 +1,4 @@
-/* gobals location:false */
+/* globals location:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -19,28 +19,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   describe("referrer", () => {
     it("should reject when passing an invalid absolute URL for referrer", () => {
       assert.isRejected(JSDOM.fromURL("http://example.com/", { referrer: "asdf" }), TypeError);
-    });
-
-    it("should not send a Referer header when no referrer option is given", async () => {
-      const url = location.origin + "/";
-
-      const dom = await JSDOM.fromURL(url);
-      console.log(dom.serialize());
-      assert.strictEqual(dom.window.document.referrer, "");
-    });
-
-    it("should use the supplied referrer option as a Referer header", async () => {
-      const url = location.origin + "/";
-
-      const dom = await JSDOM.fromURL(url, { referrer: "http://example.com/" });
-      assert.strictEqual(dom.window.document.referrer, "http://example.com/");
-    });
-
-    it("should canonicalize referrer URLs before using them as a Referer header", async () => {
-      const url = location.origin + "/";
-
-      const dom = await JSDOM.fromURL(url, { referrer: "http:example.com" });
-      assert.strictEqual(dom.window.document.referrer, "http://example.com/");
     });
   });
 
