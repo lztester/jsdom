@@ -1,5 +1,5 @@
 /* globals location:false */
-/* globals nagivator:false */
+/* globals navigator:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
