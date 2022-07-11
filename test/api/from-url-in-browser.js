@@ -27,8 +27,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
-        //const url = location.origin + "/";
-        const url = "https://www.github.com/";
+        const url = location.origin + "/";
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.URL, url);
