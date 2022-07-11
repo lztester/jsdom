@@ -1,8 +1,10 @@
 /* globals location:false */
+/* globals nagivator:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
 
+const jsdom = require("../..");
 const { JSDOM } = require("../..");
 
 require("chai").use(require("../chai-helpers.js"));
@@ -62,11 +64,10 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
       const dom = await JSDOM.fromURL(url, {
         runScripts: "dangerously",
-        resources: "usable",
-        resources: new jsdom.ResourceLoader({userAgent: navigator.userAgent}),
+        resources: new jsdom.ResourceLoader({ userAgent: navigator.userAgent }),
         pretendToBeVisual: true
       });
-      assert.strictEqual(!!dom.window.document, true);
+      assert.strictEqual(Boolean(dom.window.document), true);
     });
   });
 });
