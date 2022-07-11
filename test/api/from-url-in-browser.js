@@ -56,7 +56,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     });
   });
 
-  describe("load the script resouces"), () => {
+  describe("load the script resouces", () => {
     it("should load external scripts successfully", async () => {
       const url = location.origin + "/";
 
