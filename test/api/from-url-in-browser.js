@@ -3,7 +3,6 @@
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
 
-const jsdom = require("../..");
 const { JSDOM } = require("../..");
 
 require("chai").use(require("../chai-helpers.js"));
