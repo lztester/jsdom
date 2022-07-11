@@ -1,3 +1,4 @@
+/* gobals location:false */
 "use strict";
 const { assert } = require("chai");
 const { describe, it } = require("mocha-sugar-free");
@@ -21,7 +22,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     });
 
     it("should not send a Referer header when no referrer option is given", async () => {
-      const url = "https://www.google.com/";
+      const url = location.origin;
 
       const dom = await JSDOM.fromURL(url);
       console.log(dom.window.document.referrer);
@@ -29,14 +30,14 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     });
 
     it("should use the supplied referrer option as a Referer header", async () => {
-      const url = "https://www.google.com/";
+      const url = location.origin;
 
       const dom = await JSDOM.fromURL(url, { referrer: "http://example.com/" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
     });
 
     it("should canonicalize referrer URLs before using them as a Referer header", async () => {
-      const url = "https://www.google.com/";
+      const url = location.origin;;
 
       const dom = await JSDOM.fromURL(url, { referrer: "http:example.com" });
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
@@ -46,14 +47,14 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
-        const url = "https://www.google.com/";
+        const url = location.origin;
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.URL, url);
       });
 
       it("should preserve full request URL", async () => {
-        const url = "https://www.google.com/";
+        const url = location.origin + "/";
         const search = "?a=1";
         const fragment = "#fragment";
         const fullURL = url + search + fragment;
