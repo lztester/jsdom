@@ -24,8 +24,8 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
   describe("inferring options from the response", () => {
     describe("url", () => {
-      it("should use the URL fetched for a 200", async () => {
-        console.log(location.toString());
+      it("should use the URL fetched for a 200" + location.toString(), async () => {
+        console.log(3);
         const url = location.toString();
 
         const dom = await JSDOM.fromURL(url);
@@ -33,7 +33,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
       });
 
       it("should preserve full request URL", async () => {
-        console.log(location.toString());
         const url = location.origin + "/";
         const search = "?a=1";
         const fragment = "#fragment";
