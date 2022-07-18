@@ -33,6 +33,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
       });
 
       it("should preserve full request URL", async () => {
+        console.log(location.toString());
         const url = location.origin + "/";
         const search = "?a=1";
         const fragment = "#fragment";
