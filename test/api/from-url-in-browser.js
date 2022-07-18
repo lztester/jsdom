@@ -19,7 +19,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   it("should return a rejected promise for a 404", () => {
     const url = location.origin + "/base/";
 
-    return assert.isRejected(JSDOM.fromURL(url));
+    return assert.isRejected(JSDOM.fromURL(url), RangeError);
   });
 
   describe("referrer", () => {
