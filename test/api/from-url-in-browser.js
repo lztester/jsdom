@@ -25,6 +25,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
+        console.log(location.toString());
         const url = location.toString();
 
         const dom = await JSDOM.fromURL(url);
