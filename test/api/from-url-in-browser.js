@@ -78,6 +78,9 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
           );
           hasError = true;
         });
+        if (!hasError) {
+          throw new Error("no error");
+        }
       });
 
       /*
