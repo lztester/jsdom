@@ -54,6 +54,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
 
+      /*
       it("inferring contentType", async () => {
         const url = location.toString();
 
@@ -67,6 +68,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
           );
         }
       });
+      */
     });
   });
 });
