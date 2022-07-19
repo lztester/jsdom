@@ -70,16 +70,12 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
       it("no. 4", async () => {
         const url = location.toString();
-
-        try {
-          const dom = await JSDOM.fromURL(url);
-          throw new Error("no error.");
-        } catch (err) {
+        await JSDOM.fromURL(url).catch(err=>
           assert.strictEqual(
             err.message,
             `The given content type of "application/javascript" was not a HTML or XML content type`
-          );
-        }
+          )
+        );
       });
 
       /*
