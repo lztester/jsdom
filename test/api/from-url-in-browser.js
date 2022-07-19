@@ -77,8 +77,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
             `The given content type of "application/javascript" was not a HTML or XML content type`
           );
           hasError = true;
-        }).then(()=>{
-          assert.strictEqual(hasError, true);
         });
       });
 
