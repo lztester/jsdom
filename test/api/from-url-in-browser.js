@@ -69,9 +69,9 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
       });
 
       it("no. 4", async () => {
-        const url = location.toString();
+        const url = location.origin + "/base/";
         let hasError = false;
-        await Promise.allSettled([JSDOM.fromURL(url).then(undefined, err=> {
+        await Promise.allSettled([JSDOM.fromURL(url).then(undefined, err => {
           assert.strictEqual(
             err.message,
             `The given content type of "application/javascript" was not a HTML or XML content type`
