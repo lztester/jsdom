@@ -70,7 +70,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
       it("no. 4", async () => {
         const url = location.toString();
-        await JSDOM.fromURL(url).catch(err=>
+        await JSDOM.fromURL(url).then(dom=>assert.strictEqual(false, true), err=>
           assert.strictEqual(
             err.message,
             `The given content type of "application/javascript" was not a HTML or XML content type`
