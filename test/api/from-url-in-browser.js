@@ -52,12 +52,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
       it("should disallow passing a content type manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
-
-      it("should disallow a content type being inferred out of html or xml", () => {
-        const url = location.toString();
-
-        return assert.isRejected(JSDOM.fromURL(url));
-      });
     });
   });
 });
