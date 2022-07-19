@@ -68,19 +68,9 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
 
-      it("no. 4", { slow: 1 }, async () => {
+      it("no. 4", { slow: 1 }, () => {
         const url = location.origin + "/base/";
-        let hasError = false;
-        await Promise.allSettled([JSDOM.fromURL(url).then(undefined, err => {
-          assert.strictEqual(
-            err.message,
-            `The given content type of "application/javascript" was not a HTML or XML content type`
-          );
-          hasError = true;
-        })]);
-        if (!hasError) {
-          throw new Error("no error");
-        }
+        return assert.isRejected(JSDOM.fromURL(url));
       });
 
       /*
