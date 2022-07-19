@@ -49,10 +49,9 @@ module.exports = (chai, util) => {
 
   assert.isRejected = (promise, errorType) => {
     return promise.then(
-      () => "expected promise to reject, not fulfill",
-      // () => {
-      //   throw new Error("expected promise to reject, not fulfill");
-      // },
+      () => {
+        throw new Error("expected promise to reject, not fulfill");
+      },
       reason => {
         if (errorType) {
           assert.strictEqual(reason.name, errorType.name);
