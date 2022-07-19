@@ -31,6 +31,13 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
         assert.strictEqual(dom.window.document.URL, url);
       });
 
+      it("should use the URL fetched for a 200", async () => {
+        const url = location.toString();
+
+        const dom = await JSDOM.fromURL(url);
+        assert.strictEqual(dom.window.document.URL, url);
+      });
+
       it("should preserve full request URL", async () => {
         const url = location.origin + "/";
         const search = "?a=1";
@@ -50,8 +57,22 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     });
 
     describe("contentType", () => {
+      it("should use the URL fetched for a 200", async () => {
+        const url = location.toString();
+
+        const dom = await JSDOM.fromURL(url);
+        assert.strictEqual(dom.window.document.URL, url);
+      });
+
       it("should disallow passing a content type manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
+      });
+
+      it("should use the URL fetched for a 200", async () => {
+        const url = location.toString();
+
+        const dom = await JSDOM.fromURL(url);
+        assert.strictEqual(dom.window.document.URL, url);
       });
 
       /*
