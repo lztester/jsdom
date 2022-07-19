@@ -88,7 +88,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
         try {
           const dom = await JSDOM.fromURL(url);
-          assert.strictEqual(dom.window.document.URL, 1);
+          throw new Error("no error.");
         } catch (err) {
           assert.strictEqual(
             err.message,
