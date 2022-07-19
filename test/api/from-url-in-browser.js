@@ -68,7 +68,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
       });
 
-      it("no. 4", async () => {
+      it("no. 4", { slow: 1 }, async () => {
         const url = location.origin + "/base/";
         let hasError = false;
         await Promise.allSettled([JSDOM.fromURL(url).then(undefined, err => {
