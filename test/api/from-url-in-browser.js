@@ -21,7 +21,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
     return assert.isRejected(
       JSDOM.fromURL(url),
-      RangeError,
+      /The given content type of "application\/javascript" was not a HTML or XML content type/,
       `The given content type of "application/javascript" was not a HTML or XML content type`
     );
   });
