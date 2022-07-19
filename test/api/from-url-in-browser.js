@@ -21,6 +21,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
 
     try {
       await JSDOM.fromURL(url);
+      assert.strictEqual(false, true);
     } catch (err) {
       assert.strictEqual(
         err.message,
