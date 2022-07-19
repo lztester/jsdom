@@ -19,7 +19,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   it("should return a rejected promise for a 404", () => {
     const url = location.toString();
 
-    return assert.isRejected(JSDOM.fromURL(url), RangeError);
+    return assert.isRejected(JSDOM.fromURL(url), RangeError, `The given content type of "application/javascript" was not a HTML or XML content type`);
   });
 
   describe("referrer", () => {
@@ -31,7 +31,7 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
   describe("inferring options from the response", () => {
     describe("url", () => {
       it("should use the URL fetched for a 200", async () => {
-        const url = location.toString();
+        const url = location.origin + "/";
 
         const dom = await JSDOM.fromURL(url);
         assert.strictEqual(dom.window.document.URL, url);
