@@ -16,20 +16,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     ]);
   });
 
-  it("should return a rejected promise for a 404", async () => {
-    const url = location.toString();
-
-    try {
-      await JSDOM.fromURL(url);
-      assert.strictEqual(false, true);
-    } catch (err) {
-      assert.strictEqual(
-        err.message,
-        `The given content type of "application/javascript" was not a HTML or XML content type`
-      );
-    }
-  });
-
   describe("referrer", () => {
     it("should reject when passing an invalid absolute URL for referrer", () => {
       assert.isRejected(JSDOM.fromURL("http://example.com/", { referrer: "asdf" }), TypeError);
@@ -66,6 +52,20 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     describe("contentType", () => {
       it("should disallow passing a content type manually", () => {
         return assert.isRejected(JSDOM.fromURL("http://example.com/", { contentType: "application/xml" }), TypeError);
+      });
+
+      it("inferring contentType", async () => {
+        const url = location.toString();
+
+        try {
+          const dom = await JSDOM.fromURL(url);
+          assert.strictEqual(dom.window.document.URL, url);
+        } catch (err) {
+          assert.strictEqual(
+            err.message,
+            `The given content type of "application/javascript" was not a HTML or XML content type`
+          );
+        }
       });
     });
   });
