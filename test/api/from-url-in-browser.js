@@ -7,7 +7,7 @@ const { JSDOM } = require("../..");
 
 require("chai").use(require("../chai-helpers.js"));
 
-describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () => {
+describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
   it("should return a rejected promise for a bad URL", () => {
     return Promise.all([
       assert.isRejected(JSDOM.fromURL("asdf"), TypeError),
