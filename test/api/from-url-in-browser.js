@@ -16,14 +16,17 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true, timeout: 5000 }, () 
     ]);
   });
 
-  it("should return a rejected promise for a 404", () => {
+  it("should return a rejected promise for a 404", async () => {
     const url = location.toString();
 
-    return assert.isRejected(
-      JSDOM.fromURL(url),
-      /The given content type of "application\/javascript" was not a HTML or XML content type/,
-      `The given content type of "application/javascript" was not a HTML or XML content type`
-    );
+    try {
+      await JSDOM.fromURL(url);
+    } catch (err) {
+      assert.strictEqual(
+        err.message,
+        `The given content type of "application/javascript" was not a HTML or XML content type`
+      );
+    }
   });
 
   describe("referrer", () => {
