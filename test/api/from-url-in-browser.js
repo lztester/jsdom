@@ -37,7 +37,6 @@ describe("API: JSDOM.fromURL()", { skipUnlessBrowser: true }, () => {
         const fullURL = url + search + fragment;
 
         const dom = await JSDOM.fromURL(fullURL);
-        assert.strictEqual(2, 3);
         assert.strictEqual(dom.window.document.URL, fullURL);
         assert.strictEqual(dom.window.location.href, fullURL);
         assert.strictEqual(dom.window.location.search, search);
