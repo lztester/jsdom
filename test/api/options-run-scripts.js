@@ -120,7 +120,7 @@ describe("API: runScripts constructor option", () => {
           assert.strictEqual("b" in dom.window && dom.window.b === undefined, true);
           assert.strictEqual("c" in dom.window && dom.window.c === undefined, true);
           assert.strictEqual("d" in dom.window && dom.window.d === undefined, true);
-        } catch(err) {
+        } catch (err) {
           if (err.message === "passing fail") {
             assert.fail(err.message);
           } else {
