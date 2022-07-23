@@ -135,7 +135,8 @@ describe("API: JSDOM.fromURL()", () => {
       assert.strictEqual(dom.window.document.referrer, "http://example.com/");
     });
 
-    it("should use the redirect source URL as the referrer, overriding a provided one", { skipIfBrowser: true }, async () => {
+    it("should use the redirect source URL as the referrer, overriding a provided one",
+      { skipIfBrowser: true }, async () => {
       const [requestURL] = await redirectServer("<p>Hello</p>", { "Content-Type": "text/html" });
 
       const dom = await JSDOM.fromURL(requestURL, { referrer: "http://example.com/" });
