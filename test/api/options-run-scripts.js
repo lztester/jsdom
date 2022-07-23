@@ -148,6 +148,11 @@ describe("API: runScripts constructor option", () => {
             else
               throw new Error("passing fail");
           </script>`, { runScripts: "dangerously" });
+          assert.strictEqual("A" in dom.window && dom.window.A(), 1);
+          assert.strictEqual("B" in dom.window && dom.window.B(), 2);
+          assert.strictEqual("D" in dom.window && dom.window.D(), 4);
+          assert.strictEqual("E" in dom.window && dom.window.E(), 5);
+          assert.strictEqual("F" in dom.window && dom.window.A(), 6);
         } catch (err) {
           if (err.message === "passing fail") {
             assert.fail(err.message);
