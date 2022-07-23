@@ -128,6 +128,34 @@ describe("API: runScripts constructor option", () => {
           }
         }
       });
+      it("should install variables of function declaration out of all function scope on window", () => {
+        try {
+          const dom = new JSDOM(`<script>
+            function A() { return 1; }
+            { function B() { return 2; } }
+            if (false)
+              function C() { return 3; }
+            else 
+              function D() { return 4; }
+            switch (true) {
+              case true:
+                function E() { return 5; }
+            }
+            label: function F() { return 6; }            
+          </script><script>
+            if (A() === 1 && B() === 2 && D() === 4 && E() === 5 && F() === 6)
+              ; // pass
+            else
+              throw new Error("passing fail");
+          </script>`, { runScripts: "dangerously" });
+        } catch (err) {
+          if (err.message === "passing fail") {
+            assert.fail(err.message);
+          } else {
+            throw err;
+          }
+        }
+      });
     });
   });
 
