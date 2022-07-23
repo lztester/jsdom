@@ -143,16 +143,22 @@ describe("API: runScripts constructor option", () => {
             }
             label: function f() { return 6; }            
           </script><script>
-            if (a() === 1 && b() === 2 && c() === 3 && e() === 5 && f() === 6)
+            if (
+              typeof a === "function" && a() === 1 &&
+              typeof b === "function" && b() === 2 &&
+              typeof c === "function" && c() === 3 &&
+              typeof e === "function" && e() === 5 &&
+              typeof f === "function" && f() === 6
+            )
               ; // pass
             else
               throw new Error("passing fail");
           </script>`, { runScripts: "dangerously" });
-          assert.strictEqual("a" in dom.window && dom.window.a(), 1);
-          assert.strictEqual("b" in dom.window && dom.window.b(), 2);
-          assert.strictEqual("c" in dom.window && dom.window.c(), 3);
-          assert.strictEqual("e" in dom.window && dom.window.e(), 5);
-          assert.strictEqual("f" in dom.window && dom.window.f(), 6);
+          assert.strictEqual("a" in dom.window && typeof dom.window.a === "function" && dom.window.a(), 1);
+          assert.strictEqual("b" in dom.window && typeof dom.window.b === "function" && dom.window.b(), 2);
+          assert.strictEqual("c" in dom.window && typeof dom.window.c === "function" && dom.window.c(), 3);
+          assert.strictEqual("e" in dom.window && typeof dom.window.e === "function" && dom.window.e(), 5);
+          assert.strictEqual("f" in dom.window && typeof dom.window.f === "function" && dom.window.f(), 6);
         } catch (err) {
           if (err.message === "passing fail") {
             assert.fail(err.message);
