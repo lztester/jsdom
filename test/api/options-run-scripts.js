@@ -131,28 +131,28 @@ describe("API: runScripts constructor option", () => {
       it("should install variables of function declaration out of all function scope on window", () => {
         try {
           const dom = new JSDOM(`<script>
-            function A() { return 1; }
-            { function B() { return 2; } }
+            function a() { return 1; }
+            { function b() { return 2; } }
             if (false)
-              function C() { return 3; }
+              function c() { return 3; }
             else 
-              function D() { return 4; }
+              function d() { return 4; }
             switch (true) {
               case true:
-                function E() { return 5; }
+                function e() { return 5; }
             }
-            label: function F() { return 6; }            
+            label: function f() { return 6; }            
           </script><script>
-            if (A() === 1 && B() === 2 && D() === 4 && E() === 5 && F() === 6)
+            if (a() === 1 && b() === 2 && d() === 4 && e() === 5 && f() === 6)
               ; // pass
             else
               throw new Error("passing fail");
           </script>`, { runScripts: "dangerously" });
-          assert.strictEqual("A" in dom.window && dom.window.A(), 1);
-          assert.strictEqual("B" in dom.window && dom.window.B(), 2);
-          assert.strictEqual("D" in dom.window && dom.window.D(), 4);
-          assert.strictEqual("E" in dom.window && dom.window.E(), 5);
-          assert.strictEqual("F" in dom.window && dom.window.A(), 6);
+          assert.strictEqual("a" in dom.window && dom.window.a(), 1);
+          assert.strictEqual("b" in dom.window && dom.window.b(), 2);
+          assert.strictEqual("d" in dom.window && dom.window.d(), 4);
+          assert.strictEqual("e" in dom.window && dom.window.e(), 5);
+          assert.strictEqual("f" in dom.window && dom.window.f(), 6);
         } catch (err) {
           if (err.message === "passing fail") {
             assert.fail(err.message);
