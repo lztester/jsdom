@@ -101,7 +101,7 @@ describe("API: runScripts constructor option", () => {
             } else {
               var c, c1 = 0, { c2, c: c3, ...c4 } = { c2: 0, c: 0, c4: 0 }, [c5, ...c6] = [0, 0];
             }
-            if (false)
+            if (true)
               var d, d1 = 1, { d2, d: d3, ...d4 } = { d2: 2, d: 3, d4: 4 }, [d5, ...d6] = [5, 6];
             else
               var d, d1 = 0, { d2, d: d3, ...d4 } = { d2: 0, d: 0, d4: 0 }, [d5, ...d6] = [0, 0];
